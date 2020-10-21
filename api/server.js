@@ -6,6 +6,6 @@ const cars = require("../cars/cars-router");
 const server = express();
 
 server.use(express.json());
-server.use("/cars", cars)
+server.use( cars)
 
 module.exports = server;

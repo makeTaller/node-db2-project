@@ -3,7 +3,7 @@ const db = require('../data/connections')
 
 const router = express.Router();
 
-router.get("/cars", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
 	try {
 		res.json(await db("cars"))
 	} catch(err) {
@@ -11,4 +11,20 @@ router.get("/cars", async (req, res, next) => {
 	}
 })
 
+
+//     try{
+//         res.json(await db("cars").insert(body).where({vin}))
+//     }
+// })
+
+router.post("/", async (req, res, next) => {
+	try {
+		const [vin] = await db("cars").insert(req.body)
+		const newCar = await db("cars").where({ vin }).first()
+
+		res.status(201).json(newCar)
+	} catch(err) {
+		next(err)
+	}
+})
 module.exports = router
